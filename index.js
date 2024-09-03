@@ -89,20 +89,7 @@ document.querySelector("link[rel=icon]").href = favicon;
         hideLaunchpad();
     }
 
-    // Function to continuously check and reapply the logic if necessary
-    function continuousCheck() {
-        const sidebar = document.getElementById('sb_dashboard');
-
-        if (sidebar && !sidebar.classList.contains('checked')) {
-            sidebar.classList.add('checked');
-            initialize();
-        }
-
-        // Reapply the logic every 2 seconds
-        setTimeout(continuousCheck, 2000);
-    }
-
-    // Start the continuous check loop
-    continuousCheck();
+    // Initialize the script once
+    document.addEventListener('DOMContentLoaded', initialize);
 })();
 
