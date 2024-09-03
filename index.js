@@ -15,10 +15,20 @@ document.querySelector("link[rel=icon]").href = favicon;
         if (dashboard && !dashboard.classList.contains('dropdown-initialized')) {
             dashboard.classList.add('dropdown-initialized');
 
+            // Create dropdown content container
             const dropdownContent = document.createElement('div');
             dropdownContent.className = 'dropdown-content';
             dropdownContent.style.display = 'none'; // Hide the dropdown initially
 
+            // Create arrow element
+            const arrow = document.createElement('span');
+            arrow.className = 'dropdown-arrow';
+            arrow.textContent = '▼'; // Down arrow initially
+
+            // Add the arrow to the dashboard element
+            dashboard.appendChild(arrow);
+
+            // Dropdown items
             const dropdownItemsIds = [
                 'sb_location-mobile-app',
                 'f5f16a85-70d1-49d2-a0d3-df5327a020c2',
@@ -30,6 +40,7 @@ document.querySelector("link[rel=icon]").href = favicon;
                 'sb_reputation',
                 'sb_reporting'
             ];
+
             dropdownItemsIds.forEach((id) => {
                 const item = document.getElementById(id);
                 if (item) {
@@ -41,16 +52,19 @@ document.querySelector("link[rel=icon]").href = favicon;
 
             dashboard.insertAdjacentElement('afterend', dropdownContent);
 
+            // Toggle dropdown and arrow direction on click
             dashboard.addEventListener('click', function(event) {
                 event.stopPropagation(); // Prevent the event from bubbling up to the document
                 const isHidden = dropdownContent.style.display === 'none';
                 dropdownContent.style.display = isHidden ? 'block' : 'none';
+                arrow.textContent = isHidden ? '▲' : '▼'; // Toggle arrow direction
             });
 
             // Close the dropdown if a click is detected outside of it
             document.addEventListener('click', function(event) {
                 if (event.target !== dashboard && !dropdownContent.contains(event.target)) {
                     dropdownContent.style.display = 'none';
+                    arrow.textContent = '▼'; // Set arrow to down when dropdown is closed
                 }
             });
 
