@@ -3,7 +3,6 @@ document.querySelector("link[rel=icon]").href = favicon;
 
 
 
-
 (function() {
     function moveElement(element, newParent, referenceElement = null) {
         if (element && newParent) {
