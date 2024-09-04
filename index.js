@@ -2,7 +2,6 @@ favicon="https://storage.googleapis.com/msgsndr/TabqlvGhEdxHpg7xkw7X/media/66293
 document.querySelector("link[rel=icon]").href = favicon;
 
 
-
 (function() {
     function moveElement(element, newParent, referenceElement = null) {
         if (element && newParent) {
@@ -111,6 +110,7 @@ document.querySelector("link[rel=icon]").href = favicon;
         hideLaunchpad();
     }
 
-    // Directly call initialize to run the script immediately
-    initialize();
+    // Initialize the script once
+    document.addEventListener('DOMContentLoaded', initialize);
 })();
+
