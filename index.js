@@ -110,7 +110,6 @@ document.querySelector("link[rel=icon]").href = favicon;
         hideLaunchpad();
     }
 
-    // Initialize the script once
+    // Directly call initialize to run the script immediately
     document.addEventListener('DOMContentLoaded', initialize);
 })();
-
