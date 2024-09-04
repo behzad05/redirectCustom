@@ -14,23 +14,19 @@ document.querySelector("link[rel=icon]").href = favicon;
         if (dashboard && !dashboard.classList.contains('dropdown-initialized')) {
             dashboard.classList.add('dropdown-initialized');
 
-            // Create dropdown content container
             const dropdownContent = document.createElement('div');
             dropdownContent.className = 'dropdown-content';
             dropdownContent.style.display = 'none'; // Hide the dropdown initially
 
-            // Add an arrow to indicate dropdown
             const arrow = document.createElement('span');
             arrow.className = 'dropdown-arrow';
             arrow.textContent = '▼'; // Down arrow initially
             arrow.style.marginLeft = '5px'; // Add some space between the dashboard text and the arrow
 
-            // Add the arrow to the dashboard element
             dashboard.style.position = 'relative'; // Ensure dashboard has positioning
             arrow.style.cursor = 'pointer';
             dashboard.appendChild(arrow);
 
-            // Dropdown items
             const dropdownItemsIds = [
                 'sb_location-mobile-app',
                 'f5f16a85-70d1-49d2-a0d3-df5327a020c2',
@@ -54,11 +50,10 @@ document.querySelector("link[rel=icon]").href = favicon;
 
             dashboard.insertAdjacentElement('afterend', dropdownContent);
 
-            // Toggle dropdown and arrow direction on click
             dashboard.addEventListener('click', function(event) {
                 event.stopPropagation(); // Prevent the event from bubbling up to the document
                 const isDropdownHidden = dropdownContent.style.display === 'none';
-                
+
                 if (isDropdownHidden) {
                     event.preventDefault(); // Prevent the dashboard from opening if dropdown is closed
                 }
@@ -67,7 +62,6 @@ document.querySelector("link[rel=icon]").href = favicon;
                 arrow.textContent = isDropdownHidden ? '▲' : '▼'; // Toggle arrow direction
             });
 
-            // Close the dropdown if a click is detected outside of it
             document.addEventListener('click', function(event) {
                 if (!dashboard.contains(event.target) && !dropdownContent.contains(event.target)) {
                     dropdownContent.style.display = 'none';
@@ -90,11 +84,15 @@ document.querySelector("link[rel=icon]").href = favicon;
         const dashboard = document.getElementById('sb_dashboard');
         const nav = dashboard ? dashboard.closest('nav') : null;
 
-        moveElement(nav.removeChild(theAcademy), nav, nav.firstChild);
-        moveElement(nav.removeChild(directSites), nav, theAcademy.nextSibling);
-        moveElement(nav.removeChild(resellMastery), nav, directSites.nextSibling);
-        moveElement(nav.removeChild(coachingCalendar), nav, resellMastery.nextSibling);
-        moveElement(nav.removeChild(partnerPortal), nav, coachingCalendar.nextSibling);
+        if (nav && theAcademy && directSites && resellMastery && coachingCalendar && partnerPortal) {
+            moveElement(nav.removeChild(theAcademy), nav, nav.firstChild);
+            moveElement(nav.removeChild(directSites), nav, theAcademy.nextSibling);
+            moveElement(nav.removeChild(resellMastery), nav, directSites.nextSibling);
+            moveElement(nav.removeChild(coachingCalendar), nav, resellMastery.nextSibling);
+            moveElement(nav.removeChild(partnerPortal), nav, coachingCalendar.nextSibling);
+        } else {
+            console.log('One or more items to move not found.');
+        }
     }
 
     function hideLaunchpad() {
@@ -110,6 +108,6 @@ document.querySelector("link[rel=icon]").href = favicon;
         hideLaunchpad();
     }
 
-    // Directly call initialize to run the script immediately
-    document.addEventListener('DOMContentLoaded', initialize);
+    // Delay execution to ensure DOM is fully loaded
+    setTimeout(initialize, 1000); // Adjust the delay if necessary
 })();
