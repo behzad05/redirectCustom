@@ -4,6 +4,7 @@ document.querySelector("link[rel=icon]").href = favicon;
 
 
 
+
 (function() {
     // Inject the CSS for the arrow and rotation through JavaScript
     function injectCSS() {
@@ -124,22 +125,8 @@ document.querySelector("link[rel=icon]").href = favicon;
         hideLaunchpad();
     }
 
-    // Function to continuously check and reapply the logic if necessary
-    function continuousCheck() {
-        const sidebar = document.getElementById('sb_dashboard');
-
-        if (sidebar && !sidebar.classList.contains('checked')) {
-            sidebar.classList.add('checked');
-            initialize();
-        }
-
-        // Reapply the logic every 2 seconds
-        setTimeout(continuousCheck, 2000);
-    }
-
-    // Start the continuous check loop
-    continuousCheck();
+    // Function to initialize changes once the DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        initialize();
+    });
 })();
-
-
-
