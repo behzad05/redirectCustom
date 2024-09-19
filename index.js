@@ -121,7 +121,7 @@ console.log("test 32")
     // Use MutationObserver to detect when the sidebar is available
     function observeSidebar() {
         const observer = new MutationObserver(function(mutations, obs) {
-            const sidebar = document.getElementById('sidebar-v2');
+            const sidebar = document.querySelector('#sidebar-v2 > div.flex.flex-col.h-screen > div');
             if (sidebar) {
                 console.log('Sidebar detected, applying script...');
                 injectCSS(); // Inject CSS for arrow
