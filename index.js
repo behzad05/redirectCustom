@@ -3,6 +3,7 @@ document.querySelector("link[rel=icon]").href = favicon;
 
 
 
+
 (function() {
     // Inject the CSS for the arrow and rotation through JavaScript
     function injectCSS() {
@@ -87,31 +88,26 @@ document.querySelector("link[rel=icon]").href = favicon;
     }
 
     function moveTopItems() {
-        // Get the elements in the proper order
-        const directStart = document.getElementById('81120254-125c-450c-9e79-011fbcaecf3c'); // Direct Start
-        const helpLibrary = document.getElementById('1ebb4501-4485-4a9b-8171-25e7f726f953'); // Help Library
-        const resellMastery = document.getElementById('4a282f97-1844-4edc-a3a0-4ec14cabce5d'); // Resell Mastery
-        const coachingCalendar = document.getElementById('ca2c3c16-7cac-44d8-b2bf-ce50a73f1461'); // Coaching Calendar
-        const partnerPortal = document.getElementById('f7cfc3b3-dc46-4389-bdba-b9a16368fb56'); // Partner Portal
-        const directServices = document.getElementById('e91933ff-f0b5-44b1-bcc7-5d6c972e7430'); // Direct Services
+        // Corrected top-level items as per the desired order
         const directMerch = document.getElementById('bfeaa378-c453-43d1-ab29-d12b640ef788'); // Direct Merch
+        const directServices = document.getElementById('e91933ff-f0b5-44b1-bcc7-5d6c972e7430'); // Direct Services
+        const partnerPortal = document.getElementById('f7cfc3b3-dc46-4389-bdba-b9a16368fb56'); // Partner Portal
+        const coachingCalendar = document.getElementById('ca2c3c16-7cac-44d8-b2bf-ce50a73f1461'); // Coaching Calendar
+        const resellMastery = document.getElementById('4a282f97-1844-4edc-a3a0-4ec14cabce5d'); // Resell Mastery
+        const helpLibrary = document.getElementById('1ebb4501-4485-4a9b-8171-25e7f726f953'); // Help Library
+        const directStart = document.getElementById('81120254-125c-450c-9e79-011fbcaecf3c'); // Direct Start
 
         const dashboard = document.getElementById('sb_dashboard');
         const nav = dashboard ? dashboard.closest('nav') : null;
 
-        if (!nav) {
-            console.log('Navigation parent not found.');
-            return;
-        }
-
-        // Move elements in order relative to the dashboard
-        moveElement(directStart, nav, dashboard);        // Move Direct Start before Dashboard
-        moveElement(helpLibrary, nav, directStart);      // Move Help Library before Direct Start
-        moveElement(resellMastery, nav, helpLibrary);    // Move Resell Mastery before Help Library
-        moveElement(coachingCalendar, nav, resellMastery); // Move Coaching Calendar before Resell Mastery
-        moveElement(partnerPortal, nav, coachingCalendar); // Move Partner Portal before Coaching Calendar
-        moveElement(directServices, nav, partnerPortal); // Move Direct Services before Partner Portal
-        moveElement(directMerch, nav, directServices);   // Move Direct Merch before Direct Services
+        // Now insert elements in the correct order
+        moveElement(helpLibrary, nav, dashboard); // Insert Help Library before Dashboard
+        moveElement(resellMastery, nav, helpLibrary); // Insert Resell Mastery before Help Library
+        moveElement(coachingCalendar, nav, resellMastery); // Insert Coaching Calendar before Resell Mastery
+        moveElement(partnerPortal, nav, coachingCalendar); // Insert Partner Portal before Coaching Calendar
+        moveElement(directServices, nav, partnerPortal); // Insert Direct Services before Partner Portal
+        moveElement(directMerch, nav, directServices); // Insert Direct Merch before Direct Services
+        moveElement(directStart, nav, directMerch); // Insert Direct Start before Direct Merch
     }
 
     function hideLaunchpad() {
@@ -122,10 +118,9 @@ document.querySelector("link[rel=icon]").href = favicon;
     }
 
     function initialize() {
-        moveTopItems();
-        injectCSS(); // Inject CSS for the dropdown arrow
+        injectCSS(); // Inject the CSS for arrow styling
         setupDashboardDropdown();
-        
+        moveTopItems();
         hideLaunchpad();
     }
 
