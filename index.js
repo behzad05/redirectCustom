@@ -2,9 +2,7 @@ favicon="https://storage.googleapis.com/msgsndr/TabqlvGhEdxHpg7xkw7X/media/66293
 document.querySelector("link[rel=icon]").href = favicon;
 
 
-
-
-console.log("test 32")
+console.log("test 334")
 (function() {
     // Inject the CSS for the arrow and rotation through JavaScript
     function injectCSS() {
@@ -101,6 +99,11 @@ console.log("test 32")
         const dashboard = document.getElementById('sb_dashboard');
         const nav = dashboard ? dashboard.closest('nav') : null;
 
+        if (!nav) {
+            console.log('Navigation parent not found.');
+            return;
+        }
+
         // Now insert elements in the correct order
         moveElement(helpLibrary, nav, dashboard); // Insert Help Library before Dashboard
         moveElement(resellMastery, nav, helpLibrary); // Insert Resell Mastery before Help Library
@@ -134,7 +137,7 @@ console.log("test 32")
         });
 
         // Observe the entire document for changes
-        observer.observe(document, {
+        observer.observe(document.body, {
             childList: true,
             subtree: true
         });
