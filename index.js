@@ -122,9 +122,10 @@ document.querySelector("link[rel=icon]").href = favicon;
     }
 
     function initialize() {
+        moveTopItems();
         injectCSS(); // Inject CSS for the dropdown arrow
         setupDashboardDropdown();
-        moveTopItems();
+        
         hideLaunchpad();
     }
 
