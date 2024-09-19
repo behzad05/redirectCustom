@@ -4,7 +4,7 @@ document.querySelector("link[rel=icon]").href = favicon;
 
 
 
-
+console.log("test 32")
 (function() {
     // Inject the CSS for the arrow and rotation through JavaScript
     function injectCSS() {
@@ -118,15 +118,32 @@ document.querySelector("link[rel=icon]").href = favicon;
         }
     }
 
-    function initialize() {
-        injectCSS(); // Inject the CSS for arrow styling
-        setupDashboardDropdown();
-        moveTopItems();
-        hideLaunchpad();
+    // Use MutationObserver to detect when the sidebar is available
+    function observeSidebar() {
+        const observer = new MutationObserver(function(mutations, obs) {
+            const sidebar = document.getElementById('sidebar-v2');
+            if (sidebar) {
+                console.log('Sidebar detected, applying script...');
+                injectCSS(); // Inject CSS for arrow
+                setupDashboardDropdown(); // Setup dropdown
+                moveTopItems(); // Rearrange top items
+                hideLaunchpad(); // Hide launchpad
+
+                obs.disconnect(); // Stop observing once sidebar is detected and script is applied
+            }
+        });
+
+        // Observe the entire document for changes
+        observer.observe(document, {
+            childList: true,
+            subtree: true
+        });
     }
 
-    // Function to initialize changes once the DOM is ready
-    document.addEventListener('DOMContentLoaded', function() {
-        initialize();
-    });
+    function initialize() {
+        observeSidebar(); // Start observing the document for the sidebar
+    }
+
+    // Start the script
+    initialize();
 })();
