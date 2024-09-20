@@ -2,7 +2,7 @@ favicon="https://storage.googleapis.com/msgsndr/TabqlvGhEdxHpg7xkw7X/media/66293
 document.querySelector("link[rel=icon]").href = favicon;
 
 
-console.log("test 339")
+console.log("test 339");
 
 
 
