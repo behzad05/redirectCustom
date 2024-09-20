@@ -2,7 +2,7 @@
     document.querySelector("link[rel=icon]").href = favicon;
     
     
-    console.log("test 342");
+    console.log("test 343");
     
     
     (function() {
@@ -31,28 +31,29 @@
     
         // Function to move elements in the correct order in the sidebar
         function moveTopItems() {
-        const directStart = document.getElementById('81120254-125c-450c-9e79-011fbcaecf3c'); // Direct Start
-        const helpLibrary = document.getElementById('1ebb4501-4485-4a9b-8171-25e7f726f953'); // Help Library
-        const resellMastery = document.getElementById('4a282f97-1844-4edc-a3a0-4ec14cabce5d'); // Resell Mastery
-        const coachingCalendar = document.getElementById('ca2c3c16-7cac-44d8-b2bf-ce50a73f1461'); // Coaching Calendar
-        const partnerPortal = document.getElementById('f7cfc3b3-dc46-4389-bdba-b9a16368fb56'); // Partner Portal
-        const directServices = document.getElementById('e91933ff-f0b5-44b1-bcc7-5d6c972e7430'); // Direct Services
-        const directMerch = document.getElementById('bfeaa378-c453-43d1-ab29-d12b640ef788'); // Direct Merch
-    
-        const dashboard = document.getElementById('sb_dashboard');
-        const nav = dashboard ? dashboard.closest('nav') : null;
-    
-        if (!nav || !dashboard) return;
-    
-        // Insert elements in the new correct order
-        moveElement(directStart, nav, dashboard);
-        moveElement(helpLibrary, nav, directStart);
-        moveElement(resellMastery, nav, helpLibrary);
-        moveElement(coachingCalendar, nav, resellMastery);
-        moveElement(partnerPortal, nav, coachingCalendar);
-        moveElement(directServices, nav, partnerPortal);
-        moveElement(directMerch, nav, directServices);
-    }
+                    const directStart = document.getElementById('81120254-125c-450c-9e79-011fbcaecf3c'); // Direct Start
+                    const helpLibrary = document.getElementById('1ebb4501-4485-4a9b-8171-25e7f726f953'); // Help Library
+                    const resellMastery = document.getElementById('4a282f97-1844-4edc-a3a0-4ec14cabce5d'); // Resell Mastery
+                    const coachingCalendar = document.getElementById('ca2c3c16-7cac-44d8-b2bf-ce50a73f1461'); // Coaching Calendar
+                    const partnerPortal = document.getElementById('f7cfc3b3-dc46-4389-bdba-b9a16368fb56'); // Partner Portal
+                    const directServices = document.getElementById('e91933ff-f0b5-44b1-bcc7-5d6c972e7430'); // Direct Services
+                    const directMerch = document.getElementById('bfeaa378-c453-43d1-ab29-d12b640ef788'); // Direct Merch
+                
+                    const dashboard = document.getElementById('sb_dashboard');
+                    const nav = dashboard ? dashboard.closest('nav') : null;
+                
+                    if (!nav || !dashboard) return;
+                
+                    // Insert elements in the reverse order
+                    moveElement(directMerch, nav, dashboard);
+                    moveElement(directServices, nav, directMerch);
+                    moveElement(partnerPortal, nav, directServices);
+                    moveElement(coachingCalendar, nav, partnerPortal);
+                    moveElement(resellMastery, nav, coachingCalendar);
+                    moveElement(helpLibrary, nav, resellMastery);
+                    moveElement(directStart, nav, helpLibrary);
+                }
+
     
         // Function to handle the dropdown and arrow behavior
         function setupDashboardDropdown() {
