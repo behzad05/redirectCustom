@@ -2,7 +2,8 @@ favicon="https://storage.googleapis.com/msgsndr/TabqlvGhEdxHpg7xkw7X/media/66293
 document.querySelector("link[rel=icon]").href = favicon;
 
 
-console.log("test 338")
+console.log("test 339")
+
 
 
 (function() {
@@ -29,14 +30,12 @@ console.log("test 338")
         document.head.appendChild(style); // Append the style to the head
     }
 
-    // Function to move an element to a new parent
     function moveElement(element, newParent, referenceElement = null) {
         if (element && newParent) {
             newParent.insertBefore(element, referenceElement);
         }
     }
 
-    // Function to set up the dashboard dropdown behavior
     function setupDashboardDropdown() {
         const dashboard = document.getElementById('sb_dashboard');
         if (dashboard && !dashboard.classList.contains('dropdown-initialized')) {
@@ -90,8 +89,8 @@ console.log("test 338")
         }
     }
 
-    // Function to move the top-level items as per the desired order
     function moveTopItems() {
+        // Corrected top-level items as per the desired order
         const directMerch = document.getElementById('bfeaa378-c453-43d1-ab29-d12b640ef788'); // Direct Merch
         const directServices = document.getElementById('e91933ff-f0b5-44b1-bcc7-5d6c972e7430'); // Direct Services
         const partnerPortal = document.getElementById('f7cfc3b3-dc46-4389-bdba-b9a16368fb56'); // Partner Portal
@@ -113,29 +112,6 @@ console.log("test 338")
         moveElement(directStart, nav, directMerch); // Insert Direct Start before Direct Merch
     }
 
-    // Mutation Observer to detect changes in the sidebar and rearrange the elements
-    function observeSidebarChanges() {
-        const sidebar = document.querySelector('nav'); // Assuming the top-level navigation is inside a <nav>
-
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.type === 'childList' || mutation.type === 'subtree') {
-                    console.log('Sidebar mutated, rearranging top-level items.');
-                    moveTopItems();
-                }
-            });
-        });
-
-        // Observe changes to the sidebar
-        observer.observe(sidebar, {
-            childList: true,
-            subtree: true
-        });
-
-        console.log('Started observing the sidebar for changes.');
-    }
-
-    // Function to hide the launchpad element
     function hideLaunchpad() {
         const launchpad = document.getElementById('sb_launchpad');
         if (launchpad) {
@@ -143,14 +119,26 @@ console.log("test 338")
         }
     }
 
-    // Initialize the script
     function initialize() {
-        injectCSS(); // Inject the CSS for the dropdown arrow
+        injectCSS(); // Inject the CSS for arrow styling
         setupDashboardDropdown();
+        moveTopItems();
         hideLaunchpad();
-        observeSidebarChanges(); // Start observing the sidebar for changes
     }
 
-    // Start the script
-    initialize();
+    // Function to continuously check and reapply the logic if necessary
+    function continuousCheck() {
+        const sidebar = document.getElementById('sb_dashboard');
+
+        if (sidebar && !sidebar.classList.contains('checked')) {
+            sidebar.classList.add('checked');
+            initialize();
+        }
+
+        // Reapply the logic every 2 seconds
+        setTimeout(continuousCheck, 2000);
+    }
+
+    // Start the continuous check loop
+    continuousCheck();
 })();
