@@ -5,9 +5,8 @@ document.querySelector("link[rel=icon]").href = favicon;
 console.log("test 340");
 
 
-
 (function() {
-    // Inject the CSS for the arrow and rotation through JavaScript
+    // Function to inject CSS for the arrow and rotation
     function injectCSS() {
         const css = `
             #sb_dashboard::after {
@@ -30,12 +29,32 @@ console.log("test 340");
         document.head.appendChild(style); // Append the style to the head
     }
 
-    function moveElement(element, newParent, referenceElement = null) {
-        if (element && newParent) {
-            newParent.insertBefore(element, referenceElement);
-        }
+    // Function to move elements in the correct order in the sidebar
+    function moveTopItems() {
+        const directMerch = document.getElementById('bfeaa378-c453-43d1-ab29-d12b640ef788'); // Direct Merch
+        const directServices = document.getElementById('e91933ff-f0b5-44b1-bcc7-5d6c972e7430'); // Direct Services
+        const partnerPortal = document.getElementById('f7cfc3b3-dc46-4389-bdba-b9a16368fb56'); // Partner Portal
+        const coachingCalendar = document.getElementById('ca2c3c16-7cac-44d8-b2bf-ce50a73f1461'); // Coaching Calendar
+        const resellMastery = document.getElementById('4a282f97-1844-4edc-a3a0-4ec14cabce5d'); // Resell Mastery
+        const helpLibrary = document.getElementById('1ebb4501-4485-4a9b-8171-25e7f726f953'); // Help Library
+        const directStart = document.getElementById('81120254-125c-450c-9e79-011fbcaecf3c'); // Direct Start
+
+        const dashboard = document.getElementById('sb_dashboard');
+        const nav = dashboard ? dashboard.closest('nav') : null;
+
+        if (!nav || !dashboard) return;
+
+        // Now insert elements in the correct order
+        moveElement(helpLibrary, nav, dashboard);
+        moveElement(resellMastery, nav, helpLibrary);
+        moveElement(coachingCalendar, nav, resellMastery);
+        moveElement(partnerPortal, nav, coachingCalendar);
+        moveElement(directServices, nav, partnerPortal);
+        moveElement(directMerch, nav, directServices);
+        moveElement(directStart, nav, directMerch);
     }
 
+    // Function to handle the dropdown and arrow behavior
     function setupDashboardDropdown() {
         const dashboard = document.getElementById('sb_dashboard');
         if (dashboard && !dashboard.classList.contains('dropdown-initialized')) {
@@ -82,36 +101,10 @@ console.log("test 340");
                     dashboard.classList.remove('active'); // Reset the arrow direction
                 }
             });
-
-            console.log('Dashboard dropdown setup complete.');
-        } else if (!dashboard) {
-            console.log('Dashboard not found');
         }
     }
 
-    function moveTopItems() {
-        // Corrected top-level items as per the desired order
-        const directMerch = document.getElementById('bfeaa378-c453-43d1-ab29-d12b640ef788'); // Direct Merch
-        const directServices = document.getElementById('e91933ff-f0b5-44b1-bcc7-5d6c972e7430'); // Direct Services
-        const partnerPortal = document.getElementById('f7cfc3b3-dc46-4389-bdba-b9a16368fb56'); // Partner Portal
-        const coachingCalendar = document.getElementById('ca2c3c16-7cac-44d8-b2bf-ce50a73f1461'); // Coaching Calendar
-        const resellMastery = document.getElementById('4a282f97-1844-4edc-a3a0-4ec14cabce5d'); // Resell Mastery
-        const helpLibrary = document.getElementById('1ebb4501-4485-4a9b-8171-25e7f726f953'); // Help Library
-        const directStart = document.getElementById('81120254-125c-450c-9e79-011fbcaecf3c'); // Direct Start
-
-        const dashboard = document.getElementById('sb_dashboard');
-        const nav = dashboard ? dashboard.closest('nav') : null;
-
-        // Now insert elements in the correct order
-        moveElement(helpLibrary, nav, dashboard); // Insert Help Library before Dashboard
-        moveElement(resellMastery, nav, helpLibrary); // Insert Resell Mastery before Help Library
-        moveElement(coachingCalendar, nav, resellMastery); // Insert Coaching Calendar before Resell Mastery
-        moveElement(partnerPortal, nav, coachingCalendar); // Insert Partner Portal before Coaching Calendar
-        moveElement(directServices, nav, partnerPortal); // Insert Direct Services before Partner Portal
-        moveElement(directMerch, nav, directServices); // Insert Direct Merch before Direct Services
-        moveElement(directStart, nav, directMerch); // Insert Direct Start before Direct Merch
-    }
-
+    // Function to hide the launchpad element
     function hideLaunchpad() {
         const launchpad = document.getElementById('sb_launchpad');
         if (launchpad) {
@@ -119,26 +112,42 @@ console.log("test 340");
         }
     }
 
-    function initialize() {
-        injectCSS(); // Inject the CSS for arrow styling
-        setupDashboardDropdown();
-        moveTopItems();
-        hideLaunchpad();
-    }
-
-    // Function to continuously check and reapply the logic if necessary
-    function continuousCheck() {
-        const sidebar = document.getElementById('sb_dashboard');
-
-        if (sidebar && !sidebar.classList.contains('checked')) {
-            sidebar.classList.add('checked');
-            initialize();
+    // Function to move an element to a new parent
+    function moveElement(element, newParent, referenceElement = null) {
+        if (element && newParent) {
+            newParent.insertBefore(element, referenceElement);
         }
-
-        // Reapply the logic every 2 seconds
-        setTimeout(continuousCheck, 2000);
     }
 
-    // Start the continuous check loop
-    continuousCheck();
+    // Retry logic for checking the existence of the sidebar elements
+    function retryUntilSuccess(func, maxRetries = 10, interval = 1000) {
+        let retries = 0;
+
+        const execute = () => {
+            if (retries >= maxRetries) {
+                console.error('Max retries reached. Sidebar elements not found.');
+                return;
+            }
+
+            const sidebar = document.querySelector('#sidebar-v2 > div.flex.flex-col.h-screen > div');
+            if (sidebar) {
+                // Once the sidebar is detected, apply all necessary functions
+                injectCSS(); // Inject CSS for the dropdown arrow
+                setupDashboardDropdown(); // Setup dropdown functionality
+                moveTopItems(); // Rearrange top items
+                hideLaunchpad(); // Hide the launchpad
+
+                console.log('Sidebar elements successfully processed.');
+            } else {
+                retries++;
+                console.log(`Retrying... attempt ${retries}`);
+                setTimeout(execute, interval);
+            }
+        };
+
+        execute();
+    }
+
+    // Start the retry mechanism with a max of 10 retries and 1 second interval
+    retryUntilSuccess();
 })();
