@@ -2,7 +2,7 @@ favicon="https://storage.googleapis.com/msgsndr/TabqlvGhEdxHpg7xkw7X/media/66293
 document.querySelector("link[rel=icon]").href = favicon;
 
 
-console.log("test 340");
+console.log("test 341");
 
 
 (function() {
@@ -150,4 +150,7 @@ console.log("test 340");
 
     // Start the retry mechanism with a max of 10 retries and 1 second interval
     retryUntilSuccess();
+    setInterval(function() {
+    moveTopItems();
+}, 2000);
 })();
