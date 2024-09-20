@@ -2,10 +2,10 @@ favicon="https://storage.googleapis.com/msgsndr/TabqlvGhEdxHpg7xkw7X/media/66293
 document.querySelector("link[rel=icon]").href = favicon;
 
 
-console.log("test 336")
+console.log("test 337")
 
 (function() {
-    // Inject the CSS for the arrow and rotation
+    // Function to inject CSS for the arrow and rotation
     function injectCSS() {
         const css = `
             #sb_dashboard::after {
@@ -28,7 +28,7 @@ console.log("test 336")
         document.head.appendChild(style); // Append the style to the head
     }
 
-    // Move elements in the correct order
+    // Function to move elements in the correct order in the sidebar
     function moveTopItems() {
         const directMerch = document.getElementById('bfeaa378-c453-43d1-ab29-d12b640ef788'); // Direct Merch
         const directServices = document.getElementById('e91933ff-f0b5-44b1-bcc7-5d6c972e7430'); // Direct Services
@@ -43,7 +43,7 @@ console.log("test 336")
 
         if (!nav || !dashboard) return;
 
-        // Move elements in the correct order
+        // Now insert elements in the correct order
         moveElement(helpLibrary, nav, dashboard);
         moveElement(resellMastery, nav, helpLibrary);
         moveElement(coachingCalendar, nav, resellMastery);
@@ -53,7 +53,7 @@ console.log("test 336")
         moveElement(directStart, nav, directMerch);
     }
 
-    // Function to handle dropdown and arrow behavior
+    // Function to handle the dropdown and arrow behavior
     function setupDashboardDropdown() {
         const dashboard = document.getElementById('sb_dashboard');
         if (dashboard && !dashboard.classList.contains('dropdown-initialized')) {
@@ -61,7 +61,7 @@ console.log("test 336")
 
             const dropdownContent = document.createElement('div');
             dropdownContent.className = 'dropdown-content';
-            dropdownContent.style.display = 'none'; // Hide dropdown initially
+            dropdownContent.style.display = 'none'; // Hide the dropdown initially
 
             const dropdownItemsIds = [
                 'sb_location-mobile-app', // Mobile App
@@ -79,22 +79,25 @@ console.log("test 336")
                 const item = document.getElementById(id);
                 if (item) {
                     dropdownContent.appendChild(item);
+                } else {
+                    console.log('Dropdown item not found:', id);
                 }
             });
 
             dashboard.insertAdjacentElement('afterend', dropdownContent);
 
             dashboard.addEventListener('click', function(event) {
-                event.stopPropagation(); // Prevent bubbling
+                event.stopPropagation(); // Prevent the event from bubbling up to the document
                 const isHidden = dropdownContent.style.display === 'none';
                 dropdownContent.style.display = isHidden ? 'block' : 'none';
                 dashboard.classList.toggle('active'); // Toggle arrow rotation
             });
 
+            // Close the dropdown if a click is detected outside of it
             document.addEventListener('click', function(event) {
                 if (event.target !== dashboard && !dropdownContent.contains(event.target)) {
                     dropdownContent.style.display = 'none';
-                    dashboard.classList.remove('active'); // Reset arrow direction
+                    dashboard.classList.remove('active'); // Reset the arrow direction
                 }
             });
         }
@@ -115,26 +118,35 @@ console.log("test 336")
         }
     }
 
-    // MutationObserver to monitor changes in the sidebar
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
+    // Retry logic for checking the existence of the sidebar elements
+    function retryUntilSuccess(func, maxRetries = 10, interval = 1000) {
+        let retries = 0;
+
+        const execute = () => {
+            if (retries >= maxRetries) {
+                console.error('Max retries reached. Sidebar elements not found.');
+                return;
+            }
+
             const sidebar = document.querySelector('#sidebar-v2 > div.flex.flex-col.h-screen > div');
             if (sidebar) {
-                // Apply all necessary functions when sidebar is available
-                injectCSS(); // Inject CSS for arrow
-                setupDashboardDropdown(); // Setup dropdown
-                moveTopItems(); // Move top items
-                hideLaunchpad(); // Hide launchpad
+                // Once the sidebar is detected, apply all necessary functions
+                injectCSS(); // Inject CSS for the dropdown arrow
+                setupDashboardDropdown(); // Setup dropdown functionality
+                moveTopItems(); // Rearrange top items
+                hideLaunchpad(); // Hide the launchpad
 
-                // Stop observing once applied
-                observer.disconnect();
+                console.log('Sidebar elements successfully processed.');
+            } else {
+                retries++;
+                console.log(`Retrying... attempt ${retries}`);
+                setTimeout(execute, interval);
             }
-        });
-    });
+        };
 
-    // Start observing the body for changes
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
+        execute();
+    }
+
+    // Start the retry mechanism with a max of 10 retries and 1 second interval
+    retryUntilSuccess();
 })();
