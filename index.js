@@ -2,7 +2,7 @@
     document.querySelector("link[rel=icon]").href = favicon;
     
     
-    console.log("test 346");
+    console.log("test 347");
     
     
     (function() {
@@ -40,7 +40,7 @@
                 const directMerch = document.getElementById('bfeaa378-c453-43d1-ab29-d12b640ef788'); // Direct Merch
                 const webinarDirect = document.getElementById('83099f1e-d253-4f39-ae8f-14cc05873114'); // Webinar Direct
                 
-                const dashboard = document.getElementById('sb_ai-employee-promo');
+                const dashboard = document.getElementById('sb_dashboard');
                 const nav = dashboard ? dashboard.closest('nav') : null;
             
                 if (!nav || !dashboard) return;
