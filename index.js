@@ -2,7 +2,7 @@
     document.querySelector("link[rel=icon]").href = favicon;
     
     
-    console.log("test 348");
+    console.log("test 349");
    
 (function () {
     // Ensure CSS for `order` and enforce display styles
