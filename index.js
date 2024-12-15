@@ -50,8 +50,7 @@
                 moveElement(directServices, nav, directMerch);
                 moveElement(webinarDirect, nav, directServices);
                 moveElement(partnerPortal, nav, webinarDirect);
-                moveElement(coachingCalendar, nav, partnerPortal);
-                moveElement(resellMastery, nav, coachingCalendar);
+                moveElement(resellMastery, nav, partnerPortal);
                 moveElement(helpLibrary, nav, resellMastery);
                 moveElement(directStart, nav, helpLibrary);
             }
