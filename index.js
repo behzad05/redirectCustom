@@ -2,7 +2,7 @@
     document.querySelector("link[rel=icon]").href = favicon;
     
     
-    console.log("test 351");
+    console.log("test 354");
    
 
     (function() {
