@@ -31,7 +31,7 @@
     
         // Function to move elements in the correct order in the sidebar
             function moveTopItems() {
-                const directStart = document.getElementById('81120254-125c-450c-9e79-011fbcaecf3c'); // Direct Start
+                const directStart = document.getElementById('f33be4bc-112b-4cb5-8991-3d0fa4263e29'); // Direct Start
                 const helpLibrary = document.getElementById('1ebb4501-4485-4a9b-8171-25e7f726f953'); // Help Library
                 const resellMastery = document.getElementById('4a282f97-1844-4edc-a3a0-4ec14cabce5d'); // Resell Mastery
                 const coachingCalendar = document.getElementById('ca2c3c16-7cac-44d8-b2bf-ce50a73f1461'); // Coaching Calendar
