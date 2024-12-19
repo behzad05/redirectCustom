@@ -1,6 +1,6 @@
 console.log("test6");
 
-<script>
+
     (function () {
         // Function to inject CSS for dropdown styles
         function injectCSS() {
@@ -122,4 +122,4 @@ console.log("test6");
         // Start the initialization process
         initializeSidebarDropdown();
     })();
-</script>
+
