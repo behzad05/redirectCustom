@@ -1,4 +1,4 @@
-console.log("test 2");
+console.log("test 3");
 
 (function () {
     // Function to inject CSS for the arrow and rotation
