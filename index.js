@@ -1,17 +1,41 @@
-console.log("test 1");
+console.log("test 2");
 
 (function () {
     // Function to inject CSS for the arrow and rotation
     function injectCSS() {
         const css = `
+            #sb_dashboard {
+                position: relative !important; /* Ensure proper positioning for the dropdown */
+            }
             #sb_dashboard::after {
-                content: '\\25BC'; /* Unicode character for a downward arrow */
+                content: '\25BC'; /* Unicode character for a downward arrow */
                 display: inline-block;
                 margin-left: 10px;
                 transition: transform 0.3s ease; /* Smooth rotation transition */
             }
             #sb_dashboard.active::after {
                 transform: rotate(180deg); /* Rotate the arrow upward */
+            }
+            .dropdown-content {
+                position: absolute !important;
+                top: 100%; /* Place the dropdown below the dashboard */
+                left: 0;
+                width: 100%;
+                background-color: white;
+                border: 1px solid #ccc;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+                display: none;
+                flex-direction: column;
+            }
+            .dropdown-content a {
+                padding: 8px 16px;
+                text-decoration: none;
+                color: black;
+                display: block;
+            }
+            .dropdown-content a:hover {
+                background-color: #f0f0f0;
             }
         `;
         const style = document.createElement('style');
@@ -32,7 +56,6 @@ console.log("test 1");
 
             const dropdownContent = document.createElement('div');
             dropdownContent.className = 'dropdown-content';
-            dropdownContent.style.display = 'none'; // Hide the dropdown initially
 
             const dropdownItemsIds = [
                 'sb_location-mobile-app', // Mobile App
@@ -55,12 +78,12 @@ console.log("test 1");
                 }
             });
 
-            dashboard.insertAdjacentElement('afterend', dropdownContent);
+            dashboard.appendChild(dropdownContent);
 
             dashboard.addEventListener('click', function (event) {
                 event.stopPropagation(); // Prevent the event from bubbling up to the document
                 const isHidden = dropdownContent.style.display === 'none';
-                dropdownContent.style.display = isHidden ? 'block' : 'none';
+                dropdownContent.style.display = isHidden ? 'flex' : 'none';
                 dashboard.classList.toggle('active'); // Toggle arrow rotation
             });
 
