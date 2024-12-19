@@ -8,7 +8,7 @@ console.log("test3");
                 position: relative !important; /* Ensure proper positioning for the dropdown */
             }
             #sb_dashboard::after {
-                content: '\25BC';
+                content: '\\25BC';
                 display: inline-block;
                 margin-left: 10px;
                 transition: transform 0.3s ease; /* Smooth rotation transition */
